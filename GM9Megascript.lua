@@ -25,9 +25,12 @@ local GM9Megascript = {}
 -- Other variables for the script that are needed
 GM9Megascript.Helpers = {}
 GM9Megascript.Menus = {}
-GM9Megascript.BackupOptions = {}
 GM9Megascript.ErrorMenus = {}
+
 GM9Megascript.Processes = {}
+
+GM9Megascript.BackupOptions = {}
+GM9Megascript.RestoreOptions = {}
 
 -- Menu display on the top screen
 local PREVIEW_MODE_TEXT = {
