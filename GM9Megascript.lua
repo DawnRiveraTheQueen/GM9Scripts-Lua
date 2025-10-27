@@ -445,6 +445,10 @@ function GM9Megascript.RestoreOptions.EmuNAND()
     PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.EMUNAND_RESTORE
     GM9Megascript.Helpers.DrawTopScreenTextCenter(PREVIEW_MODE)
 
+    GM9Megascript.Processes.EmuNANDRestore()
+end
+
+function GM9Megascript.Processes.EmuNANDRestore()
     -- Now select the backup
     local NAND_BACKUP_TO_RESTORE = ""
     local USE_CUSTOM_DIR = false
@@ -452,7 +456,7 @@ function GM9Megascript.RestoreOptions.EmuNAND()
 
     -- Before we do anything, check if EmuNAND actually exists
     if fs.find_not("E:/") then
-        -- Don't backup anything if EmuNAND is a no-go
+        -- Don't restore anything if EmuNAND is a no-go
         ui.echo("There's no EmuNAND. Aborted.")
         GM9Megascript.Menus.RestoreOptions()
     end
@@ -560,7 +564,7 @@ function GM9Megascript.Menus.MainMenu()
                 "Restore Options",
                 "CTRNAND Transfer",
                 "Hax Options",
-                "FBI <-> H&S Options",
+                "FBI -> H&S Options",
                 "Dump Options",
                 "Inject Options",
                 "Scripts from Plailect's Guide",
