@@ -57,6 +57,7 @@ local GM9MENULIST = {
     EMUNAND_RESTORE = 10,
     ERROR_SYSNAND_RESTORE_SAFE = 11,
     ERROR_SYSNAND_RESTORE_FULL = 12,
+    ERROR_EMUNAND_RESTORE = 13,
     NO_MENU_CREATED = 99999,
 }
 
@@ -145,29 +146,13 @@ function GM9Megascript.ExitScript()
     return
 end
 
--- [[[ SysNAND BACKUP PROCESS: ERROR SCREEN ]]] --
-function GM9Megascript.ErrorMenus.SysNANDBackup()
-    PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.SYSNAND_BACKUP
-    GM9Megascript.Helpers.MakeFullMenu(
-        {
-            topText = PREVIEW_MODE,
-            optionText = "Process failure options:",
-            menuSelections = {
-                "Try Again",
-                "Return to Backup Menu",
-                "Return to Main Menu",
-                "Exit Script",
-            },
-            selectionFunctions = {
-                [1] = GM9Megascript.Processes.SysNANDBackup,
-                [2] = GM9Megascript.Menus.BackupOptions,
-                [3] = GM9Megascript.Menus.MainMenu,
-                [4] = GM9Megascript.ExitScript,
-            },
-            menuID = GM9MENULIST.ERROR_SYSNAND_BACKUP,
-        }
-    )
-end
+
+
+
+
+
+
+
 
 -- [[[ SysNAND BACKUP PROCESS ]]] --
 function GM9Megascript.Processes.SysNANDBackup()
@@ -205,29 +190,9 @@ function GM9Megascript.BackupOptions.SysNAND()
     end
 end
 
--- [[[ EmuNAND BACKUP PROCESS: ERROR SCREEN ]]] --
-function GM9Megascript.ErrorMenus.EmuNANDBackup()
-    PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.EMUNAND_BACKUP
-    GM9Megascript.Helpers.MakeFullMenu(
-        {
-            topText = PREVIEW_MODE,
-            optionText = "Process failure options:",
-            menuSelections = {
-                "Try Again",
-                "Return to Backup Menu",
-                "Return to Main Menu",
-                "Exit Script",
-            },
-            selectionFunctions = {
-                [1] = GM9Megascript.Processes.EmuNANDBackup,
-                [2] = GM9Megascript.Menus.BackupOptions,
-                [3] = GM9Megascript.Menus.MainMenu,
-                [4] = GM9Megascript.ExitScript,
-            },
-            menuID = GM9MENULIST.ERROR_EMUNAND_BACKUP,
-        }
-    )
-end
+
+
+
 
 -- [[[ EmuNAND BACKUP PROCESS ]]] --
 function GM9Megascript.Processes.EmuNANDBackup()
@@ -273,6 +238,10 @@ function GM9Megascript.BackupOptions.EmuNAND()
     end
 end
 
+
+
+
+
 -- [ BACKUP OPTIONS ] --
 function GM9Megascript.Menus.BackupOptions()
     -- Title below
@@ -296,29 +265,9 @@ function GM9Megascript.Menus.BackupOptions()
     )
 end
 
--- [[[ EmuNAND BACKUP PROCESS: ERROR SCREEN ]]] --
-function GM9Megascript.ErrorMenus.SysNANDRestoreFull()
-    PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.SYSNAND_RESTORE_FULL
-    GM9Megascript.Helpers.MakeFullMenu(
-        {
-            topText = PREVIEW_MODE,
-            optionText = "Process failure options:",
-            menuSelections = {
-                "Try Again",
-                "Return to Restore Menu",
-                "Return to Main Menu",
-                "Exit Script",
-            },
-            selectionFunctions = {
-                [1] = GM9Megascript.Processes.SysNANDRestoreFull,
-                [2] = GM9Megascript.Menus.RestoreOptions,
-                [3] = GM9Megascript.Menus.MainMenu,
-                [4] = GM9Megascript.ExitScript,
-            },
-            menuID = GM9MENULIST.ERROR_SYSNAND_RESTORE_FULL,
-        }
-    )
-end
+
+
+
 
 -- [[[ SysNAND RESTORE (FULL) PROCESS ]]] --
 function GM9Megascript.Processes.SysNANDRestoreFull()
@@ -402,29 +351,9 @@ function GM9Megascript.RestoreOptions.SysNANDFull()
     end
 end
 
--- [[[ EmuNAND BACKUP PROCESS: ERROR SCREEN ]]] --
-function GM9Megascript.ErrorMenus.SysNANDRestoreFull()
-    PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.SYSNAND_RESTORE_SAFE
-    GM9Megascript.Helpers.MakeFullMenu(
-        {
-            topText = PREVIEW_MODE,
-            optionText = "Process failure options:",
-            menuSelections = {
-                "Try Again",
-                "Return to Restore Menu",
-                "Return to Main Menu",
-                "Exit Script",
-            },
-            selectionFunctions = {
-                [1] = GM9Megascript.Processes.SysNANDRestoreSafe,
-                [2] = GM9Megascript.Menus.RestoreOptions,
-                [3] = GM9Megascript.Menus.MainMenu,
-                [4] = GM9Megascript.ExitScript,
-            },
-            menuID = GM9MENULIST.ERROR_SYSNAND_RESTORE_SAFE,
-        }
-    )
-end
+
+
+
 
 -- [[[ SysNAND RESTORE (SAFE) PROCESS ]]] --
 function GM9Megascript.Processes.SysNANDRestoreSafe()
@@ -508,6 +437,10 @@ function GM9Megascript.RestoreOptions.SysNANDSafe()
     GM9Megascript.Processes.SysNANDRestoreSafe()
 end
 
+
+
+
+
 -- [ RESTORE OPTIONS ] --
 function GM9Megascript.Menus.RestoreOptions()
     -- Title below
@@ -532,6 +465,10 @@ function GM9Megascript.Menus.RestoreOptions()
         }
     )
 end
+
+
+
+
 
 -- [ MAIN MENU ] --
 function GM9Megascript.Menus.MainMenu()
@@ -566,6 +503,110 @@ function GM9Megascript.Menus.MainMenu()
                 [10] = GM9Megascript.ExitScript,
             },
             menuID = GM9MENULIST.MAIN,
+        }
+    )
+end
+
+
+
+
+
+
+
+-- (( ERROR MENUS )) --
+
+-- [[[ SysNAND BACKUP PROCESS: ERROR SCREEN ]]] --
+function GM9Megascript.ErrorMenus.SysNANDBackup()
+    PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.SYSNAND_BACKUP
+    GM9Megascript.Helpers.MakeFullMenu(
+        {
+            topText = PREVIEW_MODE,
+            optionText = "Process failure options:",
+            menuSelections = {
+                "Try Again",
+                "Return to Backup Menu",
+                "Return to Main Menu",
+                "Exit Script",
+            },
+            selectionFunctions = {
+                [1] = GM9Megascript.Processes.SysNANDBackup,
+                [2] = GM9Megascript.Menus.BackupOptions,
+                [3] = GM9Megascript.Menus.MainMenu,
+                [4] = GM9Megascript.ExitScript,
+            },
+            menuID = GM9MENULIST.ERROR_SYSNAND_BACKUP,
+        }
+    )
+end
+
+-- [[[ EmuNAND BACKUP PROCESS: ERROR SCREEN ]]] --
+function GM9Megascript.ErrorMenus.EmuNANDBackup()
+    PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.EMUNAND_BACKUP
+    GM9Megascript.Helpers.MakeFullMenu(
+        {
+            topText = PREVIEW_MODE,
+            optionText = "Process failure options:",
+            menuSelections = {
+                "Try Again",
+                "Return to Backup Menu",
+                "Return to Main Menu",
+                "Exit Script",
+            },
+            selectionFunctions = {
+                [1] = GM9Megascript.Processes.EmuNANDBackup,
+                [2] = GM9Megascript.Menus.BackupOptions,
+                [3] = GM9Megascript.Menus.MainMenu,
+                [4] = GM9Megascript.ExitScript,
+            },
+            menuID = GM9MENULIST.ERROR_EMUNAND_BACKUP,
+        }
+    )
+end
+
+-- [[[ EmuNAND BACKUP PROCESS: ERROR SCREEN ]]] --
+function GM9Megascript.ErrorMenus.SysNANDRestoreFull()
+    PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.SYSNAND_RESTORE_FULL
+    GM9Megascript.Helpers.MakeFullMenu(
+        {
+            topText = PREVIEW_MODE,
+            optionText = "Process failure options:",
+            menuSelections = {
+                "Try Again",
+                "Return to Restore Menu",
+                "Return to Main Menu",
+                "Exit Script",
+            },
+            selectionFunctions = {
+                [1] = GM9Megascript.Processes.SysNANDRestoreFull,
+                [2] = GM9Megascript.Menus.RestoreOptions,
+                [3] = GM9Megascript.Menus.MainMenu,
+                [4] = GM9Megascript.ExitScript,
+            },
+            menuID = GM9MENULIST.ERROR_SYSNAND_RESTORE_FULL,
+        }
+    )
+end
+
+-- [[[ EmuNAND BACKUP PROCESS: ERROR SCREEN ]]] --
+function GM9Megascript.ErrorMenus.SysNANDRestoreFull()
+    PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.SYSNAND_RESTORE_SAFE
+    GM9Megascript.Helpers.MakeFullMenu(
+        {
+            topText = PREVIEW_MODE,
+            optionText = "Process failure options:",
+            menuSelections = {
+                "Try Again",
+                "Return to Restore Menu",
+                "Return to Main Menu",
+                "Exit Script",
+            },
+            selectionFunctions = {
+                [1] = GM9Megascript.Processes.SysNANDRestoreSafe,
+                [2] = GM9Megascript.Menus.RestoreOptions,
+                [3] = GM9Megascript.Menus.MainMenu,
+                [4] = GM9Megascript.ExitScript,
+            },
+            menuID = GM9MENULIST.ERROR_SYSNAND_RESTORE_SAFE,
         }
     )
 end
