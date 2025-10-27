@@ -204,7 +204,7 @@ function GM9Megascript.Processes.EmuNANDBackup()
     GM9Megascript.Helpers.DrawTopScreenTextCenter(PREVIEW_MODE)
 
     -- Before we do anything, check if EmuNAND actually exists
-    if fs.find_not("E:/") then
+    if not fs.exists("E:/") then
         -- Don't backup anything if EmuNAND is a no-go
         ui.echo("There's no EmuNAND. Aborted.")
         GM9Megascript.Menus.BackupOptions()
@@ -451,7 +451,7 @@ function GM9Megascript.Processes.EmuNANDRestore()
     local CUSTOM_DIR = ""
 
     -- Before we do anything, check if EmuNAND actually exists
-    if fs.find_not("E:/") then
+    if not fs.exists("E:/") then
         -- Don't restore anything if EmuNAND is a no-go
         ui.echo("There's no EmuNAND. Aborted.")
         GM9Megascript.Menus.RestoreOptions()
