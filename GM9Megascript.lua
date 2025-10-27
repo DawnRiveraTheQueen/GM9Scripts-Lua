@@ -201,10 +201,9 @@ function GM9Megascript.Processes.EmuNANDBackup()
     GM9Megascript.Helpers.DrawTopScreenTextCenter(PREVIEW_MODE)
 
     -- Before we do anything, check if EmuNAND actually exists
-    local EmuNANDExists = fs.exists("4:/")
-    if not EmuNANDExists then
+    if fs.find_not("E:/") then
         -- Don't backup anything if EmuNAND is a no-go
-        ui.echo("There's no EmuNAND, so there's no need to back it up.")
+        ui.echo("There's no EmuNAND. Aborted.")
         GM9Megascript.Menus.BackupOptions()
     end
 
@@ -441,6 +440,84 @@ end
 
 
 
+function GM9Megascript.RestoreOptions.EmuNAND()
+    -- Draw top screen text
+    PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.EMUNAND_RESTORE
+    GM9Megascript.Helpers.DrawTopScreenTextCenter(PREVIEW_MODE)
+
+    -- Now select the backup
+    local NAND_BACKUP_TO_RESTORE = ""
+    local USE_CUSTOM_DIR = false
+    local CUSTOM_DIR = ""
+
+    -- Before we do anything, check if EmuNAND actually exists
+    if fs.find_not("E:/") then
+        -- Don't backup anything if EmuNAND is a no-go
+        ui.echo("There's no EmuNAND. Aborted.")
+        GM9Megascript.Menus.RestoreOptions()
+    end
+
+    -- Ask for a custom directory, and specify a NAND backup from either answer
+    if ui.ask("Would you like to use a custom directory?\n \nIf you don't want to, the \"GM9\" out\ndirectory will be used instead.")
+        CUSTOM_DIR = fs.ask_select_dir("Select directory to find NAND backups.", "0:/", true)
+        if not CUSTOM_DIR then
+            ui.echo("NAND restore cancelled.")
+            GM9Megascript.Menus.RestoreOptions()
+        end
+        NAND_BACKUP_TO_RESTORE = fs.ask_select_file("Select your NAND backup.", CUSTOM_DIR.."/*nand_??.bin")
+    else
+        NAND_BACKUP_TO_RESTORE = fs.ask_select_file("Select your NAND backup.", GM9OUT.."/*nand_??.bin")
+    end
+    -- Cancel if we don't select a backup
+    if not NAND_BACKUP_TO_RESTORE then
+        ui.echo("NAND restore cancelled.")
+        GM9Megascript.Menus.RestoreOptions()
+    end
+    -- Prompt to be ready
+    if not ui.ask("Ready to restore your EmuNAND?") then
+        -- Cancelled
+        ui.echo("NAND restore cancelled.")
+        GM9Megascript.Menus.RestoreOptions()
+    else
+        -- Allow to write to the NAND
+        if not fs.allow("E:", {"-a"}) then
+            -- Permissions denied
+            ui.echo("Permissions to restore the NAND denied.\n \nAborted.")
+            GM9Megascript.Menus.RestoreOptions()
+        end
+        -- Let the user know that it needs to be mounted in order to restore
+        if ui.ask("This script will need to mount the\nbackup image in order to restore\nthe NAND.\n \nMount and continue?") then
+            fs.img_mount(NAND_BACKUP_TO_RESTORE)
+            -- Needs to be verified
+            if not fs.verify("I:/nand_minsize.bin") then
+                ui.echo("This isn't a valid NAND backup.\n \nAborted.")
+                GM9Megascript.Menus.RestoreOptions()
+            end
+            -- Now write the backup to nand.bin
+            if fs.write_file("I:/nand_minsize.bin", 0, "E:/nand.bin") then
+                -- Unmount
+                fs.img_umount()
+                -- Remove this file (Need more info)
+                fs.remove("1:/data/"..sys.sys_id0.."/sysdata/00010011/00000000")
+                -- Success!
+                ui.echo("Successfully restored!\n \nBackup restored:\n"..NAND_BACKUP_TO_RESTORE)
+                GM9Megascript.Menus.RestoreOptions()
+            else
+                ui.echo("An error occurred during the transfer\nprocess.\n \nPlease try again.")
+                GM9Megascript.ErrorMenus.EmuNANDRestore()
+            end
+        else
+            -- Image mount denied
+            ui.echo("Image mount to restore the NAND denied.\n \nAborted.")
+            GM9Megascript.Menus.RestoreOptions()
+        end
+    end
+end
+
+
+
+
+
 -- [ RESTORE OPTIONS ] --
 function GM9Megascript.Menus.RestoreOptions()
     -- Title below
@@ -587,8 +664,8 @@ function GM9Megascript.ErrorMenus.SysNANDRestoreFull()
     )
 end
 
--- [[[ EmuNAND BACKUP PROCESS: ERROR SCREEN ]]] --
-function GM9Megascript.ErrorMenus.SysNANDRestoreFull()
+-- [[[ SysNAND RESTORE (FULL) PROCESS: ERROR SCREEN ]]] --
+function GM9Megascript.ErrorMenus.SysNANDRestoreSafe()
     PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.SYSNAND_RESTORE_SAFE
     GM9Megascript.Helpers.MakeFullMenu(
         {
@@ -602,6 +679,30 @@ function GM9Megascript.ErrorMenus.SysNANDRestoreFull()
             },
             selectionFunctions = {
                 [1] = GM9Megascript.Processes.SysNANDRestoreSafe,
+                [2] = GM9Megascript.Menus.RestoreOptions,
+                [3] = GM9Megascript.Menus.MainMenu,
+                [4] = GM9Megascript.ExitScript,
+            },
+            menuID = GM9MENULIST.ERROR_SYSNAND_RESTORE_SAFE,
+        }
+    )
+end
+
+-- [[[ EmuNAND RESTORE PROCESS: ERROR SCREEN ]]] --
+function GM9Megascript.ErrorMenus.EmuNANDRestore()
+    PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.EMUNAND_RESTORE
+    GM9Megascript.Helpers.MakeFullMenu(
+        {
+            topText = PREVIEW_MODE,
+            optionText = "Process failure options:",
+            menuSelections = {
+                "Try Again",
+                "Return to Restore Menu",
+                "Return to Main Menu",
+                "Exit Script",
+            },
+            selectionFunctions = {
+                [1] = GM9Megascript.Processes.EmuNANDRestore,
                 [2] = GM9Megascript.Menus.RestoreOptions,
                 [3] = GM9Megascript.Menus.MainMenu,
                 [4] = GM9Megascript.ExitScript,
