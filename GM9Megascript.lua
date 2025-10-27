@@ -280,7 +280,7 @@ function GM9Megascript.Processes.SysNANDRestoreFull()
     local CUSTOM_DIR = ""
 
     -- Ask for a custom directory, and specify a NAND backup from either answer
-    if ui.ask("Would you like to use a custom directory?\n \nIf you don't want to, the \"GM9\" out\ndirectory will be used instead.")
+    if ui.ask("Would you like to use a custom directory?\n \nIf you don't want to, the \"GM9\" out\ndirectory will be used instead.") then
         CUSTOM_DIR = fs.ask_select_dir("Select directory to find NAND backups.", "0:/", true)
         if not CUSTOM_DIR then
             ui.echo("NAND restore cancelled.")
@@ -366,7 +366,7 @@ function GM9Megascript.Processes.SysNANDRestoreSafe()
     else
         local NAND_BACKUP_TO_RESTORE = ""
         -- Ask for a custom directory, and specify a NAND backup from either answer
-        if ui.ask("Would you like to use a custom directory?\n \nIf you don't want to, the \"GM9\" out\ndirectory will be used instead.")
+        if ui.ask("Would you like to use a custom directory?\n \nIf you don't want to, the \"GM9\" out\ndirectory will be used instead.") then
             CUSTOM_DIR = fs.ask_select_dir("Select directory to find NAND backups.", "0:/", true)
             if not CUSTOM_DIR then
                 ui.echo("NAND restore cancelled.")
@@ -455,7 +455,7 @@ function GM9Megascript.Processes.EmuNANDRestore()
     end
 
     -- Ask for a custom directory, and specify a NAND backup from either answer
-    if ui.ask("Would you like to use a custom directory?\n \nIf you don't want to, the \"GM9\" out\ndirectory will be used instead.")
+    if ui.ask("Would you like to use a custom directory?\n \nIf you don't want to, the \"GM9\" out\ndirectory will be used instead.") then
         CUSTOM_DIR = fs.ask_select_dir("Select directory to find NAND backups.", "0:/", true)
         if not CUSTOM_DIR then
             ui.echo("NAND restore cancelled.")
