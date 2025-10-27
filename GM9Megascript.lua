@@ -440,14 +440,7 @@ end
 
 
 
-function GM9Megascript.RestoreOptions.EmuNAND()
-    -- Draw top screen text
-    PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.EMUNAND_RESTORE
-    GM9Megascript.Helpers.DrawTopScreenTextCenter(PREVIEW_MODE)
-
-    GM9Megascript.Processes.EmuNANDRestore()
-end
-
+-- [[[ EmuNAND RESTORE PROCESS ]]] --
 function GM9Megascript.Processes.EmuNANDRestore()
     -- Now select the backup
     local NAND_BACKUP_TO_RESTORE = ""
@@ -516,6 +509,15 @@ function GM9Megascript.Processes.EmuNANDRestore()
             GM9Megascript.Menus.RestoreOptions()
         end
     end
+end
+
+-- [[ EmuNAND RESTORE ]] --
+function GM9Megascript.RestoreOptions.EmuNAND()
+    -- Draw top screen text
+    PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.EMUNAND_RESTORE
+    GM9Megascript.Helpers.DrawTopScreenTextCenter(PREVIEW_MODE)
+
+    GM9Megascript.Processes.EmuNANDRestore()
 end
 
 
