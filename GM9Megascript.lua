@@ -360,7 +360,7 @@ function GM9Megascript.Processes.SysNANDRestoreSafe()
     if HAX == "" then
         ui.echo("There is no exploit found to safely\nrestore the SysNAND.\n \nTo avoid bricks, this script will abort\nthis process.")
         GM9Megascript.Menus.RestoreOptions()
-    elseif == "ntrboot" then
+    elseif HAX == "ntrboot" then
         ui.echo("ntrboot can't be used to safely\nrestore the SysNAND.\n \nTo avoid bricks, this script will abort\nthis process.")
         GM9Megascript.Menus.RestoreOptions()
     else
