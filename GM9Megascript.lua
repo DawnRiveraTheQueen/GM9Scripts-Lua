@@ -139,6 +139,15 @@ function GM9Megascript.Helpers.MakeFullMenu(inTable)
     GM9Megascript.Helpers.MakeMenu(inTable.optionText, inTable.menuSelections, inTable.selectionFunctions, inTable.menuID)
 end
 
+-- Helper to use a true/false bool for many of GodMode9's functions rather tham rely on "nil" being false
+function GM9Megascript.Helpers.FalseIfNil(call)
+    if call == nil then
+        return false
+    else
+        return true
+    end
+end
+
 -----------------
 
 -- (( MENUS )) --
@@ -299,13 +308,13 @@ function GM9Megascript.Processes.SysNANDRestoreFull()
         GM9Megascript.Menus.RestoreOptions()
     end
     -- Prompt to be ready
-    if ui.ask("Ready to full restore your SysNAND?\n \nIf you have any hax installed, it MAY\nbe erased if none is on the\nbackup.") == nil then
+    if not GM9Megascript.Helpers.FalseIfNil(ui.ask("Ready to full restore your SysNAND?\n \nIf you have any hax installed, it MAY\nbe erased if none is on the\nbackup.")) then
         -- Cancelled
         ui.echo("NAND restore cancelled.")
         GM9Megascript.Menus.RestoreOptions()
     else
         -- Allow to write to the NAND
-        if not fs.allow("S:/", {ask_all = true}) then
+        if not GM9Megascript.Helpers.FalseIfNil(fs.allow("S:/", {ask_all = true})) then
             -- Permissions denied
             ui.echo("Permissions to restore the NAND denied.\n \nAborted.")
             GM9Megascript.Menus.RestoreOptions()
@@ -385,13 +394,13 @@ function GM9Megascript.Processes.SysNANDRestoreSafe()
             GM9Megascript.Menus.RestoreOptions()
         end
         -- Prompt to be ready
-        if ui.ask("Ready to safe restore your SysNAND?") == nil then
+        if not GM9Megascript.Helpers.FalseIfNil(ui.ask("Ready to safe restore your SysNAND?")) then
             -- Cancelled
             ui.echo("NAND restore cancelled.")
             GM9Megascript.Menus.RestoreOptions()
         else
             -- Allow to write to the NAND
-            if not fs.allow("S:/", {ask_all = true}) then
+            if not GM9Megascript.Helpers.FalseIfNil(fs.allow("S:/", {ask_all = true})) then
                 -- Permissions denied
                 ui.echo("Permissions to restore the NAND denied.\n \nAborted.")
                 GM9Megascript.Menus.RestoreOptions()
@@ -474,13 +483,13 @@ function GM9Megascript.Processes.EmuNANDRestore()
         GM9Megascript.Menus.RestoreOptions()
     end
     -- Prompt to be ready
-    if ui.ask("Ready to restore your EmuNAND?") == nil then
+    if not GM9Megascript.Helpers.FalseIfNil(ui.ask("Ready to restore your EmuNAND?")) then
         -- Cancelled
         ui.echo("NAND restore cancelled.")
         GM9Megascript.Menus.RestoreOptions()
     else
         -- Allow to write to the NAND
-        if not fs.allow("E:/", {ask_all = true}) then
+        if not GM9Megascript.Helpers.FalseIfNil(fs.allow("E:/", {ask_all = true})) then
             -- Permissions denied
             ui.echo("Permissions to restore the NAND denied.\n \nAborted.")
             GM9Megascript.Menus.RestoreOptions()
