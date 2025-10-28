@@ -43,6 +43,9 @@ local PREVIEW_MODE_TEXT = {
     SYSNAND_RESTORE_FULL = "Restore Options\n>SysNAND Restore (Full)",
     SYSNAND_RESTORE_SAFE = "Restore Options\n>SysNAND Restore (Safe)",
     EMUNAND_RESTORE = "Restore Options\n>EmuNAND Restore",
+    CTRTRANSFER = "CTRNAND Transfer",
+    CTRTRANSFER_SYSNAND = "CTRNAND Transfer\n>SysNAND",
+    CTRTRANSFER_EMUNAND = "CTRNAND Transfer\n>EmuNAND",
 }
 local PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.CREDITS
 
