@@ -284,7 +284,7 @@ function GM9Megascript.Processes.SysNANDRestoreFull()
 
     -- Ask for a custom directory, and specify a NAND backup from either answer
     if ui.ask("Would you like to use a custom directory?\n \nIf you don't want to, the \"GM9\" out\ndirectory will be used instead.") then
-        CUSTOM_DIR = fs.ask_select_dir("Select directory to find NAND backups.", "0:/", true)
+        CUSTOM_DIR = fs.ask_select_dir("Select directory to find NAND backups.", "0:/", {explorer = true})
         if not CUSTOM_DIR then
             ui.echo("NAND restore cancelled.")
             GM9Megascript.Menus.RestoreOptions()
@@ -299,13 +299,13 @@ function GM9Megascript.Processes.SysNANDRestoreFull()
         GM9Megascript.Menus.RestoreOptions()
     end
     -- Prompt to be ready
-    if not ui.ask("Ready to full restore your SysNAND?\n \nIf you have any hax installed, it MAY\nbe erased if none is on the\nbackup.") then
+    if ui.ask("Ready to full restore your SysNAND?\n \nIf you have any hax installed, it MAY\nbe erased if none is on the\nbackup.") == nil then
         -- Cancelled
         ui.echo("NAND restore cancelled.")
         GM9Megascript.Menus.RestoreOptions()
     else
         -- Allow to write to the NAND
-        if not fs.allow("S:", {"-a"}) then
+        if not fs.allow("S:/", {ask_all = true}) then
             -- Permissions denied
             ui.echo("Permissions to restore the NAND denied.\n \nAborted.")
             GM9Megascript.Menus.RestoreOptions()
@@ -370,7 +370,7 @@ function GM9Megascript.Processes.SysNANDRestoreSafe()
         local NAND_BACKUP_TO_RESTORE = ""
         -- Ask for a custom directory, and specify a NAND backup from either answer
         if ui.ask("Would you like to use a custom directory?\n \nIf you don't want to, the \"GM9\" out\ndirectory will be used instead.") then
-            CUSTOM_DIR = fs.ask_select_dir("Select directory to find NAND backups.", "0:/", true)
+            CUSTOM_DIR = fs.ask_select_dir("Select directory to find NAND backups.", "0:/", {explorer = true})
             if not CUSTOM_DIR then
                 ui.echo("NAND restore cancelled.")
                 GM9Megascript.Menus.RestoreOptions()
@@ -385,13 +385,13 @@ function GM9Megascript.Processes.SysNANDRestoreSafe()
             GM9Megascript.Menus.RestoreOptions()
         end
         -- Prompt to be ready
-        if not ui.ask("Ready to safe restore your SysNAND?") then
+        if ui.ask("Ready to safe restore your SysNAND?") == nil then
             -- Cancelled
             ui.echo("NAND restore cancelled.")
             GM9Megascript.Menus.RestoreOptions()
         else
             -- Allow to write to the NAND
-            if not fs.allow("S:", {"-a"}) then
+            if not fs.allow("S:/", {ask_all = true}) then
                 -- Permissions denied
                 ui.echo("Permissions to restore the NAND denied.\n \nAborted.")
                 GM9Megascript.Menus.RestoreOptions()
@@ -459,7 +459,7 @@ function GM9Megascript.Processes.EmuNANDRestore()
 
     -- Ask for a custom directory, and specify a NAND backup from either answer
     if ui.ask("Would you like to use a custom directory?\n \nIf you don't want to, the \"GM9\" out\ndirectory will be used instead.") then
-        CUSTOM_DIR = fs.ask_select_dir("Select directory to find NAND backups.", "0:/", true)
+        CUSTOM_DIR = fs.ask_select_dir("Select directory to find NAND backups.", "0:/", {explorer = true})
         if not CUSTOM_DIR then
             ui.echo("NAND restore cancelled.")
             GM9Megascript.Menus.RestoreOptions()
@@ -474,13 +474,13 @@ function GM9Megascript.Processes.EmuNANDRestore()
         GM9Megascript.Menus.RestoreOptions()
     end
     -- Prompt to be ready
-    if not ui.ask("Ready to restore your EmuNAND?") then
+    if ui.ask("Ready to restore your EmuNAND?") == nil then
         -- Cancelled
         ui.echo("NAND restore cancelled.")
         GM9Megascript.Menus.RestoreOptions()
     else
         -- Allow to write to the NAND
-        if not fs.allow("E:", {"-a"}) then
+        if not fs.allow("E:/", {ask_all = true}) then
             -- Permissions denied
             ui.echo("Permissions to restore the NAND denied.\n \nAborted.")
             GM9Megascript.Menus.RestoreOptions()
