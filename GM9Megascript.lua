@@ -204,7 +204,7 @@ function GM9Megascript.BackupOptions.SysNAND()
     PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.SYSNAND_BACKUP
     GM9Megascript.Helpers.DrawTopScreenTextCenter(PREVIEW_MODE)
 
-    if not ui.ask("Create a SysNAND backup in "..GM9OUT.."?\n \nPlease make sure you have enough space.\nAt least 1.3GB of free space is recommended.\n") then
+    if not M9Megascript.Helpers.FalseIfNil(ui.ask("Create a SysNAND backup in "..GM9OUT.."?\n \nPlease make sure you have enough space.\nAt least 1.3GB of free space is recommended.\n")) then
         GM9Megascript.Menus.BackupOptions()
     else
         GM9Megascript.Processes.SysNANDBackup()
@@ -251,7 +251,7 @@ function GM9Megascript.BackupOptions.EmuNAND()
     PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.EMUNAND_BACKUP
     GM9Megascript.Helpers.DrawTopScreenTextCenter(PREVIEW_MODE)
 
-    if not ui.ask("Create a EmuNAND backup in "..GM9OUT.."?\n \nPlease make sure you have enough space.\nAt least 1.3GB of free space is recommended.\n") then
+    if not GM9Megascript.Helpers.FalseIfNil(ui.ask("Create a EmuNAND backup in "..GM9OUT.."?\n \nPlease make sure you have enough space.\nAt least 1.3GB of free space is recommended.\n")) then
         GM9Megascript.Menus.BackupOptions()
     else
         GM9Megascript.Processes.EmuNANDBackup()
@@ -364,7 +364,7 @@ function GM9Megascript.RestoreOptions.SysNANDFull()
     GM9Megascript.Helpers.DrawTopScreenTextCenter(PREVIEW_MODE)
 
     -- Let the user know it may erase their exploit if their backup doesn't have one before letting them restore their backup
-    if not ui.ask("!!WARNING!!\nRestoring with this option WILL erase any\nSystem exploit depending on the backup you\nrestore!\nProceed only if you know your backup is\nsafe!\n \nContinue?\n") then
+    if not GM9Megascript.Helpers.FalseIfNil(ui.ask("!!WARNING!!\nRestoring with this option WILL erase any\nSystem exploit depending on the backup you\nrestore!\nProceed only if you know your backup is\nsafe!\n \nContinue?\n")) then
         GM9Megascript.Menus.RestoreOptions()
     else
         GM9Megascript.Processes.SysNANDRestoreFull()
