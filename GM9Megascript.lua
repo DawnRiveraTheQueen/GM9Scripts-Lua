@@ -31,6 +31,7 @@ GM9Megascript.Processes = {}
 
 GM9Megascript.BackupOptions = {}
 GM9Megascript.RestoreOptions = {}
+GM9Megascript.CTRNANDTransfer = {}
 
 -- Menu display on the top screen
 local PREVIEW_MODE_TEXT = {
@@ -64,6 +65,11 @@ local GM9MENULIST = {
     ERROR_SYSNAND_RESTORE_SAFE = 11,
     ERROR_SYSNAND_RESTORE_FULL = 12,
     ERROR_EMUNAND_RESTORE = 13,
+    CTRTRANSFER = 14,
+    CTRTRANSFER_SYSNAND = 15,
+    CTRTRANSFER_EMUNAND = 16,
+    ERROR_CTRTRANSFER_SYSNAND = 17,
+    ERROR_CTRTRANSFER_EMUNAND = 18,
     NO_MENU_CREATED = 99999,
 }
 
@@ -142,7 +148,7 @@ function GM9Megascript.Helpers.MakeFullMenu(inTable)
     GM9Megascript.Helpers.MakeMenu(inTable.optionText, inTable.menuSelections, inTable.selectionFunctions, inTable.menuID)
 end
 
--- Helper to use a true/false bool for many of GodMode9's functions rather tham rely on "nil" being false
+-- Helper to use a true/false bool for many of GodMode9's functions rather than rely on "nil" being false
 function GM9Megascript.Helpers.FalseIfNil(call)
     if call == nil then
         return false
@@ -539,6 +545,34 @@ end
 
 
 
+-- [[[ CTRNAND TRANSFER (SysNAND) PROCESS ]]] --
+function GM9Megascript.Processes.CTRTransferSysNAND()
+    
+end
+
+-- [[ CTRNAND TRANSFER (SysNAND) ]] --
+function GM9Megascript.CTRNANDTransfer.SysNAND()
+    
+end
+
+
+
+
+
+-- [[[ CTRNAND TRANSFER (EmuNAND) PROCESS ]]] --
+function GM9Megascript.Processes.CTRTransferEmuNAND()
+    
+end
+
+-- [[ CTRNAND TRANSFER (EmuNAND) ]] --
+function GM9Megascript.CTRNANDTransfer.EmuNAND()
+    
+end
+
+
+
+
+
 -- [ RESTORE OPTIONS ] --
 function GM9Megascript.Menus.RestoreOptions()
     -- Title below
@@ -560,6 +594,33 @@ function GM9Megascript.Menus.RestoreOptions()
                 [4] = GM9Megascript.Menus.MainMenu,
             },
             menuID = GM9MENULIST.RESTORE_OPTIONS,
+        }
+    )
+end
+
+
+
+
+
+-- [ RESTORE OPTIONS ] --
+function GM9Megascript.Menus.CTRNANDTransfer()
+    -- Title below
+    PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.CTRTRANSFER
+    -- Create the full menu
+    GM9Megascript.Helpers.MakeFullMenu(
+        {
+            topText = PREVIEW_MODE,
+            menuSelections = {
+                "CTRNAND Transfer (SysNAND)",
+                "CTRNAND Transfer (EmuNAND)",
+                "Return to Main Menu",
+            },
+            selectionFunctions = {
+                [1] = GM9Megascript.CTRNANDTransfer.SysNAND,
+                [2] = GM9Megascript.CTRNANDTransfer.EmuNAND,
+                [3] = GM9Megascript.Menus.MainMenu,
+            },
+            menuID = GM9MENULIST.CTRTRANSFER,
         }
     )
 end
@@ -733,6 +794,54 @@ function GM9Megascript.ErrorMenus.EmuNANDRestore()
     )
 end
 
+-- [[[ CTRNAND TRANSFER SysNAND PROCESS: ERROR SCREEN ]]] --
+function GM9Megascript.ErrorMenus.CTRNANDTransferSysNAND()
+    PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.CTRTRANSFER_SYSNAND
+    GM9Megascript.Helpers.MakeFullMenu(
+        {
+            topText = PREVIEW_MODE,
+            optionText = "Process failure options:",
+            menuSelections = {
+                "Try Again",
+                "Return to CTRNAND Transfer Menu",
+                "Return to Main Menu",
+                "Exit Script",
+            },
+            selectionFunctions = {
+                [1] = GM9Megascript.Processes.CTRTransferSysNAND,
+                [2] = GM9Megascript.Menus.CTRNANDTransfer,
+                [3] = GM9Megascript.Menus.MainMenu,
+                [4] = GM9Megascript.ExitScript,
+            },
+            menuID = GM9MENULIST.ERROR_CTRTRANSFER_SYSNAND,
+        }
+    )
+end
+
+-- [[[ CTRNAND TRANSFER SysNAND PROCESS: ERROR SCREEN ]]] --
+function GM9Megascript.ErrorMenus.CTRNANDTransferEmuNAND()
+    PREVIEW_MODE = PREVIEW_MODE_TEXT.BEGINNING..PREVIEW_MODE_TEXT.CTRTRANSFER_EMUNAND
+    GM9Megascript.Helpers.MakeFullMenu(
+        {
+            topText = PREVIEW_MODE,
+            optionText = "Process failure options:",
+            menuSelections = {
+                "Try Again",
+                "Return to CTRNAND Transfer Menu",
+                "Return to Main Menu",
+                "Exit Script",
+            },
+            selectionFunctions = {
+                [1] = GM9Megascript.Processes.CTRTransferEmuNAND,
+                [2] = GM9Megascript.Menus.CTRNANDTransfer,
+                [3] = GM9Megascript.Menus.MainMenu,
+                [4] = GM9Megascript.ExitScript,
+            },
+            menuID = GM9MENULIST.ERROR_CTRTRANSFER_EMUNAND,
+        }
+    )
+end
+
 -----------------
 
 -- (( VARIABLES )) --
@@ -756,6 +865,15 @@ GM9Megascript.menuList = {
     },
     [GM9MENULIST.ERROR_EMUNAND_BACKUP] = {
         functionToRun = GM9Megascript.ErrorMenus.EmuNANDBackup,
+    },
+    [GM9MENULIST.CTRTRANSFER] = {
+        functionToRun = GM9Megascript.Menus.CTRNANDTransfer,
+    },
+    [GM9MENULIST.CTRTRANSFER_SYSNAND] = {
+        functionToRun = GM9Megascript.CTRNANDTransfer.SysNAND,
+    },
+    [GM9MENULIST.CTRTRANSFER_EMUNAND] = {
+        functionToRun = GM9Megascript.CTRNANDTransfer.EmuNAND,
     },
     [GM9MENULIST.NO_MENU_CREATED] = {
         functionToRun = GM9Megascript.Helpers.MakeFullMenu,
